@@ -1,0 +1,121 @@
+﻿@page "/"
+
+<PageTitle>
+    Postkit – API Starter Kit for Social Features
+</PageTitle>
+
+<div class="container mt-5">
+    <div class="row align-items-center mb-5">
+        <!-- Left Side: Heading -->
+        <div class="col-md-6">
+            <h1 class="display-4 fw-bold mb-3">
+                API Starter Kit for Social Features
+            </h1>
+        </div>
+
+        <!-- Right Side: Description -->
+        <div class="col-md-6">
+            <p class="lead text-secondary mb-0">
+                Postkit is your plug-and-play hosted ASP.NET Core API designed for integrating social features like posts, comments, reactions, and notifications—without the boilerplate. Just authenticate and start sending requests.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Features Section -->
+    <div class="card shadow rounded-4 border-0 mb-5">
+        <div class="card-body p-4">
+            <h2 class="h4 fw-bold mb-4 text-dark">Key Features</h2>
+            <div class="row g-4">
+                @* Feature Item Template *@
+                @{
+                    var features = new[]
+                    {
+                new { Title = "JWT Authentication & ASP.NET Core Identity", Desc = "Secure authentication with token-based login, user registration, and password management using ASP.NET Core Identity." },
+                new { Title = "Role-Based Access Control", Desc = "Restrict access to APIs and actions based on user roles (e.g., Admin, User) to enforce authorization policies." },
+                new { Title = "API Key Management", Desc = "Custom API key authentication for external services or third-party apps to securely consume your API." },
+                new { Title = "Modular Feature-Based Architecture", Desc = "Scalable architecture powering Post, Comment, Reaction, and Notification endpoints—ready to consume via REST." },
+                new { Title = "Real-Time Notifications with SignalR", Desc = "Send and receive live updates instantly using SignalR for features like real-time likes, comments, and system alerts." },
+                new { Title = "Cloudinary Integration", Desc = "Upload, manage, and deliver optimized images and videos via Cloudinary for media-rich content support." },
+                new { Title = "Clean Code Architecture", Desc = "Follows a clean separation of concerns using Controller → Service → Repository pattern for maintainable codebase." },
+                new { Title = "Developer Tools: Swagger & Serilog", Desc = "Built-in Swagger for API testing and Serilog for structured logging and diagnostics." }
+                };
+                }
+
+                @foreach (var feature in features)
+                {
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <span class="badge bg-primary me-3 mt-1">✔</span>
+                            <div>
+                                <h6 class="fw-semibold mb-1">@feature.Title</h6>
+                                <p class="mb-0 text-muted">@feature.Desc</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mb-5">
+        <a class="btn btn-dark btn-lg px-4 me-3" href="/docs">Explore API Documentation</a>
+    </div>
+
+    <!-- Why Use Postkit -->
+    <div class="card shadow-sm border-0 rounded-4 mb-5">
+        <div class="card-body p-4">
+            <h2 class="h5 fw-bold mb-3 text-dark">💡 Why use Postkit?</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">➤ Start building with production-ready APIs instantly</li>
+                <li class="list-group-item">➤ Secure endpoints with JWT and API Key headers</li>
+                <li class="list-group-item">➤ No setup or hosting required</li>
+                <li class="list-group-item">➤ Built to scale with your frontend or mobile app</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Use Case Examples -->
+    <div class="card shadow-sm border-0 rounded-4 mb-5">
+        <div class="card-body p-4">
+            <h2 class="h5 fw-bold mb-4 text-dark">What you can build with Postkit?</h2>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="p-3 bg-white border rounded-3 h-100">
+                        💬 <strong>Community forum</strong><br />
+                        Build a Reddit-style discussion board with threaded posts, comments, and upvotes.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-white border rounded-3 h-100">
+                        🗳 <strong>User feedback board</strong><br />
+                        Collect and react to suggestions or feature requests with likes and comments.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-white border rounded-3 h-100">
+                        💻 <strong> Team collaboration wall</strong><br />
+                        Share updates, ideas, and progress with reactions and comments.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-white border rounded-3 h-100">
+                        📱 <strong>Mobile social app</strong><br />
+                        Power your mobile feed with secure posts, comments, and reactions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Footer -->
+    <footer class="text-muted small mb-2">
+        View the source on
+        <a href="https://github.com/roneldc/PostkitAPI.git" target="_blank" class="text-decoration-underline text-primary">GitHub</a>
+        · Licensed under MIT
+    </footer>
+</div>
