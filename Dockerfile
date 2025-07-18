@@ -2,10 +2,14 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-COPY *.csproj ./
-RUN dotnet restore
+# Copy only the .csproj file from PostkitUI
+COPY PostkitUI/PostkitUI.csproj ./PostkitUI/
+RUN dotnet restore ./PostkitUI/PostkitUI.csproj
 
-COPY . ./
+# Copy the rest of the project files
+COPY PostkitUI/ ./PostkitUI/
+
+WORKDIR /app/PostkitUI
 RUN dotnet publish -c Release -o out
 
 # Stage 2: serve with nginx
@@ -16,7 +20,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy Blazor published wwwroot to nginx
-COPY --from=build /app/out/wwwroot .
+COPY --from=build /app/PostkitUI/out/wwwroot .
 
 # Expose port 80
 EXPOSE 80
