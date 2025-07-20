@@ -1,0 +1,97 @@
+﻿<div class="card shadow-sm border-0 rounded-4 mb-5">
+    <div class="card-body p-4">
+        <h2 class="h5 fw-bold mb-3 text-dark">Notification Module</h2>
+        <p class="text-muted small">
+            Manage in-app user notifications triggered by events such as new comments, reactions, or mentions.
+            Supports real-time delivery via SignalR using the <code>/hubs/notification</code> endpoint.
+        </p>
+
+        <div class="alert alert-warning small p-3 mb-4">
+            🔐 <strong>Authorization Info:</strong><br />
+            <ul class="mb-0 small">
+                <li>All endpoints require:</li>
+                <ul>
+                    <li>JWT Bearer token</li>
+                    <li><code>X-ApiClientId</code></li>
+                    <li><code>X-ApiKey</code></li>
+                </ul>
+            </ul>
+        </div>
+
+        <div class="mt-3">
+            <h5 class="fw-semibold text-dark small">Endpoints</h5>
+
+            <div class="mb-3">
+                <strong class="small">GET /api/notifications</strong><br />
+                <p class="small mb-1">Fetch notifications for the currently authenticated user.</p>
+
+                <p class="fw-semibold small mb-1">Example Request:</p>
+                <code class="small d-block mb-1">
+                    GET /api/notifications?page=1&pageSize=10
+                </code>
+                <div class="text-muted small">
+                    with headers:
+                    <code>Authorization: Bearer &lt;jwt&gt;</code>,
+                    <code>X-ApiClientId</code>,
+                    <code>X-ApiKey</code>
+                </div>
+
+                <p class="fw-semibold small mt-3 mb-1">Response:</p>
+                <pre class="bg-light p-2 small rounded mb-0">
+[
+  {
+    "id": 1,
+    "userId": "user-xyz",
+    "message": "ronel commented on your post.",
+    "type": "comment",
+    "postId", "123"
+    "isRead": false,
+    "createdAt": "2025-07-19T14:10:00Z"
+  }
+]
+                </pre>
+            </div>
+
+            <div class="mb-3">
+                <strong class="small">PUT /api/notifications/{id}/read</strong><br />
+                <p class="small mb-1">Mark a specific notification as read.</p>
+            </div>
+
+            <div class="mb-3">
+                <strong class="small">PUT /api/notifications/read-all</strong><br />
+                <p class="small mb-1">Mark all notifications as read for the current user.</p>
+            </div>
+
+            <p class="fw-semibold small mb-1">Example Headers:</p>
+            <pre class="bg-light p-2 small rounded mb-0">
+Authorization: Bearer &lt;your-jwt-token&gt;
+X-ApiClientId: your-client-id
+X-ApiKey: your-api-key
+Content-Type: application/json
+            </pre>
+        </div>
+
+        <div class="mt-4">
+            <h5 class="fw-semibold text-dark small">📡 SignalR Hub</h5>
+            <p class="small mb-1">
+                Real-time notifications are pushed to connected clients via the SignalR hub:
+                <code>/hubs/notification</code>
+            </p>
+            <p class="small">
+                Clients should authenticate using the same JWT token and listen for messages like:
+                <code>ReceiveNotification</code>
+            </p>
+
+            <pre class="bg-light p-2 small rounded small mb-0">
+hubConnection.On&lt;NotificationDto&gt;("ReceiveNotification", notification =>
+{
+    // Handle the new notification here
+});
+            </pre>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

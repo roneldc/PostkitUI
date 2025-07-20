@@ -1,151 +1,154 @@
 ﻿@page "/docs"
+@using PostkitUI.Components.Docs
 @layout MainLayout
 <PageTitle>Postkit API Docs</PageTitle>
-
 <div class="container py-5 mt-1">
-    <header class="mb-5 text-center">
-        <h1 class="display-4 fw-bold text-dark">Postkit API Docs</h1>
-        <p class="lead text-muted">
-            Learn how to integrate Postkit's plug-and-play social API into your app. Authenticate, call endpoints, and enhance your platform with posts, comments, reactions, and notifications.
-        </p>
-    </header>
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 mb-4 mb-md-0">
+            <div class="sticky-top" style="top: 80px">
+                <div class="list-group shadow-sm">
+                    <a href="docs/#getting-started" class="list-group-item list-group-item-action">Getting Started</a>
+                    <a href="docs/#post-module" class="list-group-item list-group-item-action">Post Module</a>
+                    <a href="docs/#comment-module" class="list-group-item list-group-item-action">Comment Module</a>
+                    <a href="docs/#reaction-module" class="list-group-item list-group-item-action">Reaction Module</a>
+                    <a href="docs/#notification-module" class="list-group-item list-group-item-action">Notification Module</a>
+                    <a href="docs/#api-versioning" class="list-group-item list-group-item-action">API Versioning & Developer Tools</a>
+                </div>
+            </div>
+        </nav>
 
-    <section class="mb-5">
-        <div class="card shadow rounded-4 border-0">
-            <div class="card-body p-4">
-                <h2 class="h5 fw-bold text-dark">Getting Started</h2>
-                <p class="text-muted">Using Postkit is easy:</p>
-                <ol class="text-muted">
-                    <li><strong>Request Access:</strong> Contact the admin to receive your <code>ApiClientId</code> and <code>ApiKey</code>.</li>
-                    <li><strong>Authenticate:</strong> Use <code>/api/auth/login</code> to obtain your JWT token.</li>
-                    <li>
-                        <strong>Make Requests:</strong> Add the following headers to each API call:
-                        <pre class="bg-light p-3 rounded text-dark">
+        <!-- Main Content -->
+        <div class="col-md-9" data-bs-spy="scroll" data-bs-target=".list-group" data-bs-smooth-scroll="true" tabindex="0">
+            <header class="mb-5 text-center">
+                <h1 class="display-4 fw-bold text-dark">Postkit API Docs</h1>
+                <p class="lead text-muted">
+                    Learn how to integrate Postkit's plug-and-play social API into your app. Authenticate, call endpoints, and enhance your platform with posts, comments, reactions, and notifications.
+                </p>
+            </header>
+
+            <section id="getting-started" class="mb-5">
+                <div class="card shadow rounded-4 border-0">
+                    <div class="card-body p-4">
+                        <h2 class="h5 fw-bold text-dark">Getting Started</h2>
+                        <p class="text-muted">Using Postkit is easy:</p>
+                        <ol class="text-muted">
+                            <li><strong>Request Access:</strong> Contact the admin to receive your <code>ApiClientId</code> and <code>ApiKey</code>.</li>
+                            <li><strong>Authenticate:</strong> Use <code>/api/auth/login</code> to obtain your JWT token.</li>
+                            <li>
+                                <strong>Make Requests:</strong> Add the following headers to each API call:
+                                <pre class="bg-light p-3 rounded text-dark">
 Authorization: Bearer &lt;your-jwt&gt;
 X-ApiClientId: &lt;your-client-id&gt;
 X-ApiKey: &lt;your-api-key&gt;</pre>
-                    </li>
-                    <li><strong>Test in Swagger:</strong> Explore the API interactively at <code>/swagger</code>.</li>
-                </ol>
-            </div>
-        </div>
-    </section>
-  
+                            </li>
+                            <li><strong>Test in Swagger:</strong> Explore the API interactively at <code>/swagger</code>.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
 
-    <section class="mb-5">
-        <div class="card shadow rounded-4 border-0">
-            <div class="card-body p-4">
-                <h2 class="h5 fw-bold text-dark">Authentication</h2>
-                <p class="text-muted">All endpoints require the following headers:</p>
-                <ul class="text-muted">
-                    <li><code>Authorization: Bearer &lt;your-jwt&gt;</code></li>
-                    <li><code>X-ApiClientId: &lt;your-client-id&gt;</code></li>
-                    <li><code>X-ApiKey: &lt;your-api-key&gt;</code></li>
-                </ul>
-            </div>
-        </div>
-    </section>
+            <section id="post-module" class="mb-5">
+                <PostModule />
+            </section>
 
-    <div class="card shadow-sm border-0 rounded-4 mb-5">
-        <div class="card-body p-4">
-            <h2 class="h5 fw-bold mb-4 text-dark">Available Modules</h2>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="p-3 bg-white border rounded-3 h-100">
-                        📝 <strong>Posts</strong><br />
-                        Create, update, delete, and view posts. Supports pagination, filters, and metadata.
-                        <div>
-                            <code>GET /api/posts</code><br />
-                            <code>POST /api/posts</code>
+            <section id="comment-module" class="mb-5">
+                <CommentModule />
+            </section>
+
+            <section id="reaction-module" class="mb-5">
+                <ReactionModule />
+            </section>
+
+            <section id="notification-module" class="mb-5">
+                <NotificationModule />
+            </section>
+
+            <section id="api-versioning" class="row mb-5">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="card shadow rounded-4 border-0 h-100">
+                        <div class="card-body p-4">
+                            <h2 class="h5 fw-bold text-dark">API Versioning</h2>
+                            <p class="text-muted">All endpoints follow semantic versioning:</p>
+                            <ul class="text-muted">
+                                <li><code>/api/v1/posts</code></li>
+                                <li><code>/api/v1/comments</code></li>
+                            </ul>
+                            <p class="text-muted">Future versions will not break existing integrations.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="p-3 bg-white border rounded-3 h-100">
-                        💬 <strong>Comments</strong><br />
-                        Add threaded discussions to any post. Includes nesting, editing, and user identity.
-                        <div>
-                            <code>GET /api/comments/post/{postId}</code><br />
-                            <code>POST /api/comments</code>
+
+                <div id="dev-tools" class="col-md-6">
+                    <div class="card shadow rounded-4 border-0 h-100">
+                        <div class="card-body p-4">
+                            <h2 class="h5 fw-bold text-dark">Developer Tools</h2>
+                            <ul class="text-muted mb-0">
+                                <li>Swagger UI for live testing</li>
+                                <li>Postman/Thunder Client collection</li>
+                                <li>Serilog structured logging</li>
+                                <li>Works with Blazor, React, mobile apps, and more</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="p-3 bg-white border rounded-3 h-100">
-                        ❤️ <strong>Reactions</strong><br />
-                        Support for likes, emojis, and custom reactions on posts or comments.
-                        <div>
-                            <code>POST /api/reactions</code><br />
-                            <code>GET /api/reactions/post/{postId}</code>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="p-3 bg-white border rounded-3 h-100">
-                        🔔 <strong>Notifications</strong><br />
-                        Get real-time updates when someone interacts with your content.
-                        <div>
-                            <code>GET /api/notifications</code><br />
-                            <code>SignalR: /hubs/notification</code>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </section>
+
+            <section class="text-center mt-5 pt-4 border-top">
+                <p class="text-muted">Need help or found a bug? Let us know.</p>
+                <a href="https://github.com/roneldc/PostkitAPI/issues" class="text-decoration-none text-primary fw-semibold" target="_blank">📬 Report an Issue</a>
+            </section>
         </div>
     </div>
-
-
-    <section class="mb-5">
-        <div class="card shadow rounded-4 border-0">
-            <div class="card-body p-4">
-                <h2 class="h5 fw-bold text-dark">Sample JSON Payloads</h2>
-                <p class="text-muted">Example for creating a new post:</p>
-                <pre class="bg-light p-3 rounded text-dark">
-{
-  "title": "Hello from Postkit!",
-  "content": "This is a new post from the API."
-}
-            </pre>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="row mb-5">
-        <!-- API Versioning Card -->
-        <div class="col-md-6 mb-4 mb-md-0">
-            <div class="card shadow rounded-4 border-0 h-100">
-                <div class="card-body p-4">
-                    <h2 class="h5 fw-bold text-dark">API Versioning</h2>
-                    <p class="text-muted">All endpoints follow semantic versioning:</p>
-                    <ul class="text-muted">
-                        <li><code>/api/v1/posts</code></li>
-                        <li><code>/api/v1/comments</code></li>
-                    </ul>
-                    <p class="text-muted">Future versions will not break existing integrations.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Developer Tools Card -->
-        <div class="col-md-6">
-            <div class="card shadow rounded-4 border-0 h-100">
-                <div class="card-body p-4">
-                    <h2 class="h5 fw-bold text-dark">Developer Tools</h2>
-                    <ul class="text-muted mb-0">
-                        <li>Swagger UI for live testing</li>
-                        <li>Postman/Thunder Client collection</li>
-                        <li>Serilog structured logging</li>
-                        <li>Works with Blazor, React, mobile apps, and more</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="text-center mt-5 pt-4 border-top">
-        <p class="text-muted">Need help or found a bug? Let us know.</p>
-        <a href="https://github.com/roneldc/PostkitAPI/issues" class="text-decoration-none text-primary fw-semibold" target="_blank">📬 Report an Issue</a>
-    </section>
 </div>
+
+<button onclick="scrollToTop()" id="backToTopBtn" class="btn btn-primary position-fixed rounded-circle"
+        style="bottom: 40px; right: 40px; display: none; z-index: 1030;">
+    ↑
+</button>
+
+<script>
+    function initScrollTracking() {
+        const topBtn = document.getElementById("backToTopBtn");
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".list-group-item");
+
+        if (!sections.length || !navLinks.length) {
+            console.warn("No sections or nav links found");
+            return;
+        }
+
+        window.onscroll = function () {
+            topBtn.style.display = window.pageYOffset > 300 ? "block" : "none";
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        window.scrollToTop = scrollToTop;
+
+        function onScroll() {
+            let current = "getting-started";
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                const href = link.getAttribute("href");
+                if (href && href.includes(`#${current}`)) {
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", onScroll);
+        onScroll();
+    }
+
+    setTimeout(initScrollTracking, 500);
+</script>

@@ -1,0 +1,127 @@
+﻿<div class="card shadow-sm border-0 rounded-4 mb-5">
+    <div class="card-body p-4">
+        <h2 class="h5 fw-bold mb-3 text-dark">Post Module</h2>
+        <p class="text-muted small">Manage posts through public and secured endpoints, with flexible query support and authentication layers.</p>
+
+        <div class="alert alert-warning small p-3 mb-4">
+            🔐 <strong>Authorization Info:</strong><br />
+            <ul class="mb-0 small">
+                <li>
+                    <code>GET /api/posts</code> does <strong>not require JWT</strong> but <strong>requires</strong>:
+                    <ul>
+                        <li><code>X-ApiClientId</code></li>
+                        <li><code>X-ApiKey</code></li>
+                    </ul>
+                </li>
+                <li>
+                    All other endpoints (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>) require:
+                    <ul>
+                        <li>JWT Bearer token</li>
+                        <li><code>X-ApiClientId</code> and <code>X-ApiKey</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-3">
+            <h5 class="fw-semibold text-dark small">Public Endpoint</h5>
+            <p class="small mb-2"><code>GET /api/posts</code> — Fetch posts with optional filters and metadata.</p>
+
+            <p class="fw-semibold small mb-1">Supported Query Parameters:</p>
+            <table class="table table-sm table-bordered small mt-2">
+                <thead class="table-light small">
+                    <tr><th>Parameter</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>page</code></td><td>Page number (default: 1)</td></tr>
+                    <tr><td><code>pageSize</code></td><td>Posts per page (default: 10)</td></tr>
+                    <tr><td><code>search</code></td><td>Filter by title, content, or author</td></tr>
+                    <tr><td><code>userId</code></td><td>Filter by author user ID</td></tr>
+                    <tr><td><code>postId</code></td><td>Filter by Post ID</td></tr>
+                    <tr><td><code>sort</code></td><td><code>createdAt_desc</code> , <code>createdAt_asc</code> or <code>topReactions</code></td></tr>
+                    <tr><td><code>includeComments</code></td><td><code>true</code> to include comments in result</td></tr>
+                </tbody>
+            </table>
+
+            <p class="fw-semibold small mb-1">Example Request:</p>
+            <code class="small d-block mb-1">
+                GET /api/posts?page=1&pageSize=5&userId=123&includeComments=true&sort=createdAt_desc
+            </code>
+            <div class="text-muted small">
+                with headers:
+                <code>X-ApiClientId</code>, <code>X-ApiKey</code>
+            </div>
+
+            <p class="fw-semibold small mt-3 mb-1">Response:</p>
+            <pre class="bg-light p-2 small rounded mb-0 small">
+[
+  {
+    "id": "f1b0d8c5-53fb-42d1-b1c4-9a3e1779f213",
+    "title": "Introducing Postkit",
+    "content": "Postkit is your plug-and-play hosted API...",
+    "authorUserId": "user-123",
+    "authorUserName": "ronel",
+    "commentsCount": 5,
+    "reactionsCount": 12,
+    "createdAt": "2025-07-18T10:20:00Z",
+    "updatedAt": "2025-07-18T11:00:00Z",
+    "comments": [ ... ],
+    "isUserReacted": true,
+    "mediaUrl": "https://cdn.postkit.dev/media/xyz.png",
+    "mediaType": "image/png"
+  }
+]
+            </pre>
+        </div>
+
+        <div class="mt-4">
+            <h5 class="fw-semibold text-dark small">Secured Endpoints (CRUD)</h5>
+            <p class="small">Require both JWT and API credentials.</p>
+
+            <div class="mb-3">
+                <strong class="small">POST /api/posts</strong><br />
+                <p class="small mb-1">Create a new post (<code>multipart/form-data</code>)</p>
+                <table class="table table-sm table-bordered small">
+                    <thead class="table-light small"><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>title</code></td><td>string</td><td>Post title (required)</td></tr>
+                        <tr><td><code>content</code></td><td>string</td><td>Post content (required)</td></tr>
+                        <tr><td><code>media</code></td><td>IFormFile</td><td>Optional image/video</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mb-3">
+                <strong class="small">PUT /api/posts/{postId}</strong><br />
+                <p class="small mb-1">Update an existing post (<code>multipart/form-data</code>)</p>
+                <table class="table table-sm table-bordered small">
+                    <thead class="table-light small"><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>title</code></td><td>string</td><td>Updated title</td></tr>
+                        <tr><td><code>content</code></td><td>string</td><td>Updated content</td></tr>
+                        <tr><td><code>media</code></td><td>IFormFile</td><td>Optional media update</td></tr>
+                    </tbody>
+                </table>
+                <p class="small text-muted">Media file replaces the existing one if included.</p>
+            </div>
+
+            <div class="mb-4">
+                <strong class="small">DELETE /api/posts/{postId}</strong><br />
+                <p class="small mb-1">Delete a post by its <code>Guid</code> ID.</p>
+            </div>
+
+            <p class="fw-semibold small mb-1">Example Headers:</p>
+            <pre class="bg-light p-2 small rounded mb-0">
+Authorization: Bearer &lt;your-jwt-token&gt;
+X-ApiClientId: your-client-id
+X-ApiKey: your-api-key
+Content-Type: multipart/form-data
+            </pre>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+}

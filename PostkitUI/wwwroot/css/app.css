@@ -123,3 +123,14 @@ h1:focus {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
     }
+
+section[id] {
+    scroll-margin-top: 80px;
+}
+
+.list-group-item.active {
+    background-color: #1f1f1f;
+    border-color: #1f1f1f;
+    color: #ffffff;
+    font-weight: 600;
+}

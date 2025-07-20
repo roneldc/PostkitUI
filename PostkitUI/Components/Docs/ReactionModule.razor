@@ -1,0 +1,92 @@
+﻿<div class="card shadow-sm border-0 rounded-4 mb-5">
+    <div class="card-body p-4">
+        <h2 class="h5 fw-bold mb-3 text-dark">Reaction Module</h2>
+        <p class="text-muted small">
+            Handle user reactions on posts. Includes toggle functionality to add or remove a reaction per user per post.
+            All endpoints require authentication and API credentials.
+        </p>
+
+        <div class="alert alert-warning small p-3 mb-4">
+            🔐 <strong>Authorization Info:</strong><br />
+            <ul class="mb-0 small">
+                <li>All endpoints require:</li>
+                <ul>
+                    <li>JWT Bearer token</li>
+                    <li><code>X-ApiClientId</code></li>
+                    <li><code>X-ApiKey</code></li>
+                </ul>
+            </ul>
+        </div>
+
+        <div class="mt-3">
+            <h5 class="fw-semibold text-dark small">Endpoints</h5>
+
+            <div class="mb-3">
+                <strong class="small">GET /api/reactions/post/{postId}</strong><br />
+                <p class="small mb-1">Fetch all reactions or reaction summary for a specific post.</p>
+
+                <p class="fw-semibold small mb-1">Example Request:</p>
+                <code class="small d-block mb-1">
+                    GET /api/reactions/post/123
+                </code>
+                <div class="text-muted small">
+                    with headers:
+                    <code>Authorization: Bearer &lt;jwt&gt;</code>,
+                    <code>X-ApiClientId</code>,
+                    <code>X-ApiKey</code>
+                </div>
+
+                <p class="fw-semibold small mt-3 mb-1">Response:</p>
+                <pre class="bg-light p-2 small rounded mb-0">
+[
+  {
+    "id": 1,
+    "postId": 123,
+    "userId": "user-xyz",
+    "type": "like",
+    "createdAt": "2025-07-19T13:45:00Z"
+  }
+]
+                </pre>
+            </div>
+
+            <div class="mb-3">
+                <strong class="small">POST /api/reactions</strong><br />
+                <p class="small mb-1">
+                    Toggle a reaction (add or remove) for the authenticated user.
+                    If no reaction exists, a new one will be added. If it already exists, it will be removed.
+                </p>
+
+                <table class="table table-sm table-bordered small">
+                    <thead class="table-light small">
+                        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>postId</code></td><td>int</td><td>ID of the post to react to</td></tr>
+                        <tr><td><code>type</code></td><td>string</td><td>Reaction type (e.g., <code>like</code>, <code>love</code>, etc.)</td></tr>
+                    </tbody>
+                </table>
+
+                <p class="fw-semibold small mb-1">Example Request Body:</p>
+                <pre class="bg-light p-2 small rounded mb-2">
+{
+  "postId": 123,
+  "type": "like"
+}
+                </pre>
+
+                <p class="fw-semibold small mb-1">Example Headers:</p>
+                <pre class="bg-light p-2 small rounded mb-0">
+Authorization: Bearer &lt;your-jwt-token&gt;
+X-ApiClientId: your-client-id
+X-ApiKey: your-api-key
+Content-Type: application/json
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}
