@@ -7,7 +7,8 @@
             🔐 <strong>Authorization Info:</strong><br />
             <ul class="mb-0 small">
                 <li>
-                    <code>GET /api/posts</code> does <strong>not require JWT</strong> but <strong>requires</strong>:
+                    <code>GET /api/posts</code> is <strong>publicly accessible</strong> (no JWT required), but will use the JWT if available to personalize the response (e.g., user reactions).<br />
+                    This endpoint still <strong>requires</strong>:
                     <ul>
                         <li><code>X-ApiClientId</code></li>
                         <li><code>X-ApiKey</code></li>
