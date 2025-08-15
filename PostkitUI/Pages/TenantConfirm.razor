@@ -1,0 +1,145 @@
+﻿@page "/tenant/confirm"
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Nav;
+@inject HttpClient Http;
+@inject IJSRuntime JS;
+
+<div class="container col-md-8 mt-5">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <h3 class="card-title fw-bold mb-4 text-center">
+                Complete App Verification
+            </h3>
+
+            <hr />
+
+            @if (!loaded)
+            {
+                <div class="text-muted">
+                    <em>Loading...</em>
+                </div>
+            }
+            else if (!string.IsNullOrEmpty(error))
+            {
+                <div class="alert alert-danger">@error</div>
+            }
+            else
+            {
+                <div class="alert alert-white d-flex align-items-center gap-3" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 10.97a.75.75 0 0 0 1.07 0l3.992-3.992a.75.75 0 1 0-1.06-1.06L7.5 9.44 6.03 7.97a.75.75 0 0 0-1.06 1.06l2 2z" />
+                    </svg>
+                    <div>
+                        <div class="fw-semibold">You're all set!</div>
+                        <small>Please copy your API credentials below — you won't see it again.</small>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="tenantId" class="form-label">Tenant ID</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="tenantId" value="@tenantId" readonly />
+                    </div>
+
+                    <label for="apiKey" class="form-label">API Key</label>
+                    <div class="input-group mb-5">
+                        <input type="text" class="form-control" id="apiKey" value="@apiKey" readonly />
+                    </div>
+
+                    <h5 class="mb-3">&nbsp; ℹ️ Admin Login Credentials</h5>
+                    
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="email" value="@tenantEmail" readonly />
+                    </div>
+
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="password" value="@Password" readonly />
+                    </div>
+                </div>
+
+                <div class="text-end mt-5">
+                    <button class="btn btn-dark mr-2" @onclick="CopyAllCredentials">
+                        📋 Copy All Credentials
+                    </button>
+                    <a class="btn btn-primary" href="/docs" target="_blank" rel="noopener">
+                        🚀 Get Started
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string TenantId { get; set; } = string.Empty;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Token { get; set; } = string.Empty;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Password { get; set; } = string.Empty;
+
+    bool loaded = false;
+    string tenantId = string.Empty;
+    string apiKey = string.Empty;
+    string tenantEmail = string.Empty;
+    string error = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(string.IsNullOrWhiteSpace(TenantId) || string.IsNullOrWhiteSpace(Token))
+        {
+            Nav.NavigateTo("/");
+            return;
+        }
+
+        try
+        {
+            var resp = await Http.GetAsync($"/ui/tenants/{TenantId}/credentials?token={Token}");
+
+            if(resp.IsSuccessStatusCode)
+            {
+                var response = await resp.Content.ReadFromJsonAsync<TenantData>();
+                tenantId = response.TenantId;
+                apiKey = response.ApiKey;
+                tenantEmail = response.TenantEmail;
+            }
+            else
+            {
+                error = "Something went wrong during verification. Please try again or contact support if the issue persists.";
+            }
+        }
+        catch (Exception ex)
+        {
+            error = "Failed to load credentials: " + ex.Message;
+        }
+        finally
+        {
+            loaded = true;
+        }
+    }
+
+    private async Task CopyAllCredentials()
+    {
+        var combinedText = $"Tenant ID: {tenantId}\n" +
+                           $"API Key: {apiKey}\n" +
+                           $"Email: {tenantEmail}\n" +
+                           $"Password: {Password}";
+
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", combinedText);
+    }
+
+    class TenantData
+    {
+        public string TenantId { get; set; } = string.Empty;
+        public string ApiKey { get; set; } = string.Empty;
+        public string TenantEmail { get; set; } = string.Empty;
+    }
+}
