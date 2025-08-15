@@ -31,22 +31,29 @@
                 <div class="card shadow rounded-4 border-0">
                     <div class="card-body p-4">
                         <h2 class="h5 fw-bold text-dark">Getting Started</h2>
-                        <p class="text-muted">Using Postkit is easy:</p>
+                        <p class="text-muted">Follow these steps to start using Postkit:</p>
                         <ol class="text-muted">
-                            <li><strong>Request Access:</strong> Contact the admin to receive your <code>ApiClientId</code> and <code>ApiKey</code>.</li>
-                            <li><strong>Authenticate:</strong> Use <code>/api/auth/login</code> to obtain your JWT token.</li>
+                            <li>
+                                <strong>Request Access:</strong> Go to the <code>/onboard</code> page to request your
+                                <code>TenantId</code>, <code>ApiKey</code>, and login credentials.
+                            </li>
+                            <li>
+                                <strong>Authenticate:</strong> Go to <code>/accounts/login</code> to log in and obtain your JWT token.
+                            </li>
                             <li>
                                 <strong>Make Requests:</strong> Add the following headers to each API call:
                                 <pre class="bg-light p-3 rounded text-dark">
 Authorization: Bearer &lt;your-jwt&gt;
-X-ApiClientId: &lt;your-client-id&gt;
-X-ApiKey: &lt;your-api-key&gt;</pre>
+X-Tenant-Id: &lt;your-tenant-id&gt;</pre>
                             </li>
-                            <li><strong>Test in Swagger:</strong> Explore the API interactively at <code>/swagger</code>.</li>
+                            <li>
+                                <strong>Test in Swagger:</strong> Explore the API interactively at <code>/swagger</code>.
+                            </li>
                         </ol>
                     </div>
                 </div>
             </section>
+
 
             <section id="post-module" class="mb-5">
                 <PostModule />
@@ -85,7 +92,7 @@ X-ApiKey: &lt;your-api-key&gt;</pre>
                             <h2 class="h5 fw-bold text-dark">Developer Tools</h2>
                             <ul class="text-muted mb-0">
                                 <li>Swagger UI for live testing</li>
-                                <li>Postman/Thunder Client collection</li>
+                                <li>Postman Client collection</li>
                                 <li>Serilog structured logging</li>
                                 <li>Works with Blazor, React, mobile apps, and more</li>
                             </ul>
