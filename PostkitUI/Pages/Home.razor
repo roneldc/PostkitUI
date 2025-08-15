@@ -27,19 +27,18 @@
         <div class="card-body p-4">
             <h2 class="h4 fw-bold mb-4 text-dark">Key Features</h2>
             <div class="row g-4">
-                @* Feature Item Template *@
                 @{
                     var features = new[]
                     {
-                new { Title = "JWT Authentication & ASP.NET Core Identity", Desc = "Secure authentication with token-based login, user registration, and password management using ASP.NET Core Identity." },
-                new { Title = "Role-Based Access Control", Desc = "Restrict access to APIs and actions based on user roles (e.g., Admin, User) to enforce authorization policies." },
-                new { Title = "API Key Management", Desc = "Custom API key authentication for external services or third-party apps to securely consume your API." },
-                new { Title = "Modular Feature-Based Architecture", Desc = "Scalable architecture powering Post, Comment, Reaction, and Notification endpoints—ready to consume via REST." },
-                new { Title = "Real-Time Notifications with SignalR", Desc = "Send and receive live updates instantly using SignalR for features like real-time likes, comments, and system alerts." },
-                new { Title = "Cloudinary Integration", Desc = "Upload, manage, and deliver optimized images and videos via Cloudinary for media-rich content support." },
-                new { Title = "Clean Code Architecture", Desc = "Follows a clean separation of concerns using Controller → Service → Repository pattern for maintainable codebase." },
-                new { Title = "Developer Tools: Swagger & Serilog", Desc = "Built-in Swagger for API testing and Serilog for structured logging and diagnostics." }
-                };
+                    new { Title = "Multi-Tenant Architecture", Desc = "Built-in multi-tenancy support to securely isolate users, data, and resources across different client organizations." },
+                    new { Title = "User Registration & Management", Desc = "Self-service registration with email confirmation, secure password handling, and role assignment per tenant." },
+                    new { Title = "JWT Authentication with ASP.NET Core Identity", Desc = "Robust token-based authentication using ASP.NET Core Identity and customizable claims-based access control." },
+                    new { Title = "Modular & Maintainable Architecture", Desc = "Feature-based folder structure following Clean Architecture, CQRS, and MediatR patterns for scalable development." },
+                    new { Title = "Cloudinary Integration", Desc = "Seamlessly upload and serve optimized images and videos using Cloudinary's CDN and transformation tools." },
+                    new { Title = "Mailjet Email Delivery", Desc = "Transactional email support for registrations, password resets, and system notifications via Mailjet." },
+                    new { Title = "Real-Time Updates with SignalR", Desc = "Enable live experiences such as instant comments, notifications, and alerts using SignalR." },
+                    new { Title = "Custom API Key Authentication", Desc = "Secure your endpoints with API key validation for external or third-party service integrations." }
+                    };
                 }
 
                 @foreach (var feature in features)
@@ -60,7 +59,8 @@
 
     <!-- CTA -->
     <div class="mb-5">
-        <a class="btn btn-dark btn-lg px-4 me-3" href="/docs">Explore API Documentation</a>
+        <a class="btn btn-dark btn-lg px-4 me-3" href="/onboard">Get API Access</a>
+        <a class="btn btn-outline-dark btn-lg px-4 me-3" href="/docs">Explore API Documentation</a>
     </div>
 
     <!-- Why Use Postkit -->
@@ -128,7 +128,7 @@
                 <span class="badge rounded-pill bg-dark me-1">AJAX</span>
                 <span class="badge rounded-pill bg-primary">Postkit API</span>
             </div>
-            <a href="https://betsync.onrender.com/" target="_blank" class="btn btn-outline-dark mb-4">
+            <a href="https://betsync.onrender.com/" target="_blank" class="btn btn-link mb-4">
                 Visit BetSync App
             </a>
 
