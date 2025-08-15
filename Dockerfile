@@ -22,6 +22,9 @@ RUN rm -rf ./*
 # Copy Blazor published wwwroot to nginx
 COPY --from=build /app/PostkitUI/out/wwwroot .
 
+# Copy custom nginx config with CORS support
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80
 EXPOSE 80
 
