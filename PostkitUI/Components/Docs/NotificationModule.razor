@@ -12,8 +12,7 @@
                 <li>All endpoints require:</li>
                 <ul>
                     <li>JWT Bearer token</li>
-                    <li><code>X-ApiClientId</code></li>
-                    <li><code>X-ApiKey</code></li>
+                    <li><code>X-Tenant-Id</code></li>
                 </ul>
             </ul>
         </div>
@@ -27,46 +26,57 @@
 
                 <p class="fw-semibold small mb-1">Example Request:</p>
                 <code class="small d-block mb-1">
-                    GET /api/notifications?page=1&pageSize=10
+                    GET /api/notifications?page=1&pageSize=10&unreadOnly=true
                 </code>
                 <div class="text-muted small">
                     with headers:
                     <code>Authorization: Bearer &lt;jwt&gt;</code>,
-                    <code>X-ApiClientId</code>,
-                    <code>X-ApiKey</code>
+                    <code>X-Tenant-Id</code>
                 </div>
 
                 <p class="fw-semibold small mt-3 mb-1">Response:</p>
-                <pre class="bg-light p-2 small rounded mb-0">
+                <pre class="bg-light p-2 small rounded mb-2">
 [
   {
     "id": 1,
-    "userId": "user-xyz",
     "message": "ronel commented on your post.",
-    "type": "comment",
-    "postId", "123"
+    "type": 1,
+    "typeName": "Post",
+    "relatedEntityId", "123",
+    "relatedEntityType": "Post"
     "isRead": false,
-    "createdAt": "2025-07-19T14:10:00Z"
+    "createdAt": "2025-07-19T14:10:00Z",
+    "actorUser": {
+        "id"": "123",
+        "email"": "johndoe@gmail.com",
+        ...
+    }
   }
 ]
                 </pre>
+                <p class="fw-semibold small mb-1">Additional GET Endpoints:</p>
+                <p class="small mb-2"><code>GET /api/posts/{postId}/notifications/summary</code> — Retrieves total unread count and recent notifications for the current user.</p>
             </div>
 
             <div class="mb-3">
-                <strong class="small">PUT /api/notifications/{id}/read</strong><br />
+                <strong class="small">POST /api/post/{postId}/notifications/{id}/read</strong><br />
                 <p class="small mb-1">Mark a specific notification as read.</p>
             </div>
 
             <div class="mb-3">
-                <strong class="small">PUT /api/notifications/read-all</strong><br />
+                <strong class="small">POST /api/post/{postId}/notifications/mark-all-read</strong><br />
                 <p class="small mb-1">Mark all notifications as read for the current user.</p>
+            </div>
+
+            <div class="mb-3">
+                <strong class="small">DELETE /api/post/{postId}/notifications/{id}</strong><br />
+                <p class="small mb-1">Deletes a specific notification by its ID for the current user.</p>
             </div>
 
             <p class="fw-semibold small mb-1">Example Headers:</p>
             <pre class="bg-light p-2 small rounded mb-0">
 Authorization: Bearer &lt;your-jwt-token&gt;
-X-ApiClientId: your-client-id
-X-ApiKey: your-api-key
+X-Tenant-Id: your-tenant-id
 Content-Type: application/json
             </pre>
         </div>

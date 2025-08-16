@@ -12,8 +12,7 @@
                 <li>All endpoints require:</li>
                 <ul>
                     <li>JWT Bearer token</li>
-                    <li><code>X-ApiClientId</code></li>
-                    <li><code>X-ApiKey</code></li>
+                    <li><code>X-Tenant-Id</code></li>
                 </ul>
             </ul>
         </div>
@@ -22,36 +21,44 @@
             <h5 class="fw-semibold text-dark small">Endpoints</h5>
 
             <div class="mb-3">
-                <strong class="small">GET /api/reactions/post/{postId}</strong><br />
-                <p class="small mb-1">Fetch all reactions or reaction summary for a specific post.</p>
+                <strong class="small">GET /api/post/{postId}/reactions</strong><br />
+                <p class="small mb-1">Fetch all reactions for a specific post.</p>
 
                 <p class="fw-semibold small mb-1">Example Request:</p>
                 <code class="small d-block mb-1">
-                    GET /api/reactions/post/123
+                    GET /api/post/ad70c08c-e0a7-4652-a5c8-60f3269e0992/reactions
                 </code>
                 <div class="text-muted small">
                     with headers:
                     <code>Authorization: Bearer &lt;jwt&gt;</code>,
-                    <code>X-ApiClientId</code>,
-                    <code>X-ApiKey</code>
+                    <code>X-Tenant-Id</code>
                 </div>
 
                 <p class="fw-semibold small mt-3 mb-1">Response:</p>
-                <pre class="bg-light p-2 small rounded mb-0">
+                <pre class="bg-light p-2 small rounded mb-2">
 [
   {
     "id": 1,
-    "postId": 123,
-    "userId": "user-xyz",
-    "type": "like",
-    "createdAt": "2025-07-19T13:45:00Z"
+    "postId": ad70c08c-e0a7-4652-a5c8-60f3269e0992,
+    "type": 5,
+    "typeName": "Sad",
+    "emoji": "😢"
+    "createdAt": "2025-07-19T13:45:00Z",
+    "user": {
+      "id": 456,
+      "email": "johndoe@gmail.com",
+      ...
+    }
   }
 ]
                 </pre>
+
+                <p class="fw-semibold small mb-1">Additional GET Endpoints:</p>
+                <p class="small mb-2"><code>GET /api/posts/{postId}/reactions/summary</code> — Retrieves a summary of reactions (e.g., like, love, etc.) for the specified post.</p>
             </div>
 
             <div class="mb-3">
-                <strong class="small">POST /api/reactions</strong><br />
+                <strong class="small">POST /api/post/{postId}/reactions/toggle</strong><br />
                 <p class="small mb-1">
                     Toggle a reaction (add or remove) for the authenticated user.
                     If no reaction exists, a new one will be added. If it already exists, it will be removed.
@@ -62,24 +69,21 @@
                         <tr><th>Field</th><th>Type</th><th>Description</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td><code>postId</code></td><td>int</td><td>ID of the post to react to</td></tr>
-                        <tr><td><code>type</code></td><td>string</td><td>Reaction type (e.g., <code>like</code>, <code>love</code>, etc.)</td></tr>
+                        <tr><td><code>type</code></td><td>enum</td><td>Reaction type (e.g., <code>like</code>, <code>love</code>, etc.)</td></tr>
                     </tbody>
                 </table>
 
                 <p class="fw-semibold small mb-1">Example Request Body:</p>
                 <pre class="bg-light p-2 small rounded mb-2">
 {
-  "postId": 123,
-  "type": "like"
+  "type": 5
 }
                 </pre>
 
                 <p class="fw-semibold small mb-1">Example Headers:</p>
                 <pre class="bg-light p-2 small rounded mb-0">
 Authorization: Bearer &lt;your-jwt-token&gt;
-X-ApiClientId: your-client-id
-X-ApiKey: your-api-key
+X-Tenant-Id: your-client-id
 Content-Type: application/json
                 </pre>
             </div>
